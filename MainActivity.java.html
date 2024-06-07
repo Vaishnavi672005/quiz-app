@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">quiz_app</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AlertDialog</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AppCompatActivity</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Color</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Bundle</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">View</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Button</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">TextView</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity </span><span class="s0">implements </span><span class="s1">View</span><span class="s2">.</span><span class="s1">OnClickListener</span><span class="s2">{</span>
+    <span class="s1">TextView questionTextView</span><span class="s2">;</span>
+    <span class="s1">TextView totalQuestionTextView</span><span class="s2">;</span>
+    <span class="s1">Button ansA</span><span class="s2">,</span><span class="s1">ansB</span><span class="s2">,</span><span class="s1">ansC</span><span class="s2">,</span><span class="s1">ansD</span><span class="s2">;</span>
+    <span class="s1">Button btn_submit</span><span class="s2">;</span>
+
+    <span class="s0">int </span><span class="s1">score</span><span class="s2">=</span><span class="s3">0</span><span class="s2">;</span>
+    <span class="s0">int </span><span class="s1">totalQuestion </span><span class="s2">= </span><span class="s1">QuestionAnswer</span><span class="s2">.</span><span class="s1">question</span><span class="s2">.</span><span class="s1">length</span><span class="s2">;</span>
+    <span class="s0">int </span><span class="s1">currentQuestionIndex </span><span class="s2">=</span><span class="s3">0</span><span class="s2">;</span>
+    <span class="s1">String selectedAnswer</span><span class="s2">=</span><span class="s4">&quot;&quot;</span><span class="s2">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">Bundle savedInstanceState</span><span class="s2">){</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState</span><span class="s2">);</span>
+        <span class="s1">setContentView</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">layout</span><span class="s2">.</span><span class="s1">activity_main</span><span class="s2">);</span>
+
+        <span class="s1">totalQuestionTextView </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">total_question</span><span class="s2">);</span>
+        <span class="s1">questionTextView </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">question</span><span class="s2">);</span>
+        <span class="s1">ansA </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">ans_a</span><span class="s2">);</span>
+        <span class="s1">ansB </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">ans_b</span><span class="s2">);</span>
+        <span class="s1">ansC </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">ans_c</span><span class="s2">);</span>
+        <span class="s1">ansD </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">ans_d</span><span class="s2">);</span>
+        <span class="s1">btn_submit </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">btn_submit</span><span class="s2">);</span>
+
+        <span class="s1">ansA</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">ansB</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">ansC</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">ansD</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">btn_submit</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+
+
+        <span class="s1">totalQuestionTextView</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s4">&quot;Total question: &quot;</span><span class="s2">+</span><span class="s1">totalQuestion</span><span class="s2">);</span>
+
+        <span class="s1">loadNewQuestion</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">loadNewQuestion</span><span class="s2">(){</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">currentQuestionIndex </span><span class="s2">== </span><span class="s1">totalQuestion</span><span class="s2">){</span>
+            <span class="s1">finishQuiz</span><span class="s2">();</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s1">questionTextView</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s1">QuestionAnswer</span><span class="s2">.</span><span class="s1">question</span><span class="s2">[</span><span class="s1">currentQuestionIndex</span><span class="s2">]);</span>
+        <span class="s1">ansA</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s1">QuestionAnswer</span><span class="s2">.</span><span class="s1">choices</span><span class="s2">[</span><span class="s1">currentQuestionIndex</span><span class="s2">][</span><span class="s3">0</span><span class="s2">]);</span>
+        <span class="s1">ansB</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s1">QuestionAnswer</span><span class="s2">.</span><span class="s1">choices</span><span class="s2">[</span><span class="s1">currentQuestionIndex</span><span class="s2">][</span><span class="s3">1</span><span class="s2">]);</span>
+        <span class="s1">ansC</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s1">QuestionAnswer</span><span class="s2">.</span><span class="s1">choices</span><span class="s2">[</span><span class="s1">currentQuestionIndex</span><span class="s2">][</span><span class="s3">2</span><span class="s2">]);</span>
+        <span class="s1">ansD</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s1">QuestionAnswer</span><span class="s2">.</span><span class="s1">choices</span><span class="s2">[</span><span class="s1">currentQuestionIndex</span><span class="s2">][</span><span class="s3">3</span><span class="s2">]);</span>
+
+        <span class="s1">selectedAnswer</span><span class="s2">=</span><span class="s4">&quot;&quot;</span><span class="s2">;</span>
+
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">finishQuiz</span><span class="s2">(){</span>
+        <span class="s1">String passStatus</span><span class="s2">;</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">score </span><span class="s2">&gt;= </span><span class="s1">totalQuestion</span><span class="s2">+</span><span class="s3">0.6</span><span class="s2">){</span>
+            <span class="s1">passStatus </span><span class="s2">= </span><span class="s4">&quot;Passed&quot;</span><span class="s2">;</span>
+        <span class="s2">}</span><span class="s0">else</span><span class="s2">{</span>
+            <span class="s1">passStatus </span><span class="s2">= </span><span class="s4">&quot;Failed&quot;</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">new </span><span class="s1">AlertDialog</span><span class="s2">.</span><span class="s1">Builder</span><span class="s2">( </span><span class="s0">this</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s1">passStatus</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">setMessage</span><span class="s2">(</span><span class="s4">&quot;Your Score id &quot;</span><span class="s2">+</span><span class="s1">score</span><span class="s2">+</span><span class="s4">&quot; Out of &quot;</span><span class="s2">+</span><span class="s1">totalQuestion</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">setPositiveButton</span><span class="s2">( </span><span class="s4">&quot;Restart&quot;</span><span class="s2">,((</span><span class="s1">dialog</span><span class="s2">, </span><span class="s1">i</span><span class="s2">) </span><span class="s1">-&gt; restartQuiz</span><span class="s2">() ))</span>
+                <span class="s2">.</span><span class="s1">setCancelable</span><span class="s2">(</span><span class="s0">false</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">show</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">restartQuiz</span><span class="s2">(){</span>
+        <span class="s1">score </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s1">currentQuestionIndex</span><span class="s2">=</span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s1">loadNewQuestion</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onClick</span><span class="s2">(</span><span class="s1">View view</span><span class="s2">){</span>
+        <span class="s1">ansA</span><span class="s2">.</span><span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+        <span class="s1">ansB</span><span class="s2">.</span><span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+        <span class="s1">ansC</span><span class="s2">.</span><span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+        <span class="s1">ansC</span><span class="s2">.</span><span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+
+        <span class="s1">Button clickedButton </span><span class="s2">= (</span><span class="s1">Button</span><span class="s2">) </span><span class="s1">view</span><span class="s2">;</span>
+
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">clickedButton</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">btn_submit</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(!</span><span class="s1">selectedAnswer</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">selectedAnswer</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">QuestionAnswer</span><span class="s2">.</span><span class="s1">correctAnswers</span><span class="s2">[</span><span class="s1">currentQuestionIndex</span><span class="s2">])) {</span>
+                    <span class="s1">score</span><span class="s2">++;</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">clickedButton</span><span class="s2">.</span><span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">MAGENTA</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s1">currentQuestionIndex</span><span class="s2">++;</span>
+                <span class="s1">loadNewQuestion</span><span class="s2">();</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s0">else</span><span class="s2">{</span>
+                <span class="s1">selectedAnswer</span><span class="s2">=</span><span class="s1">clickedButton</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">().</span><span class="s1">toString</span><span class="s2">();</span>
+                <span class="s1">clickedButton</span><span class="s2">.</span><span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">YELLOW</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>
